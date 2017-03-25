@@ -7,6 +7,7 @@ class ApiService(object):
     currency = None
     data = None
     base = None
+    protocol = None
     url = 'blockr.io/'
     version = 'api/v1/'
     coin = 'coin/info/'
@@ -40,7 +41,7 @@ class ApiService(object):
                 """Only {1} are supported. The currency: "{0}" not allowed"""
                    .format(self.currency, self.currencies))
 
-    def build_url(self):
+    def build_url(self, use_https=False):
         """ Build the url according the users currency, and API version."""
         if self.currency == 'bitcoin':
             self.base = ''
@@ -60,7 +61,15 @@ class ApiService(object):
         if self.currency == 'megacoin':
             self.base = 'mec.'
 
-        return 'http://{0}{1}{2}'.format(self.base, self.url, self.version)
+        if use_https:
+            self.protocol = "https://"
+        else:
+            self.protocol = "http://"
+
+        return '{protocol}{base}{url}{version}'.format(protocol=self.protocol,
+                                                       base=self.base,
+                                                       url=self.url,
+                                                       version=self.version)
 
     def execute(self, req):
         """ The main caller method. HTTP reqs are passed via this method. """
@@ -68,4 +77,3 @@ class ApiService(object):
             return req.json()
         if self.data == 'text':
             return req.text
-

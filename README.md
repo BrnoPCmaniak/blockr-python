@@ -42,6 +42,9 @@ coin = Api('Bitcoin')
 
 # Set the return format to UTF-8 (Human readable).
 coin = Api('Bitcoin', 'text')
+
+# Use secure SSL connection
+coin = Api('Bitcoin', use_https=True)
 ```
 
 #### Keeping it fast

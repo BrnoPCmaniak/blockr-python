@@ -11,10 +11,10 @@ from .service import ApiService
 class Api(ApiService):
     """ The main API class. Calls the Block API with HTTP GET requests. """
     """ Test """
-    def __init__(self, currency, data='json'):
+    def __init__(self, currency, data='json', use_https=False):
         ApiService.__init__(self, currency)
         self.data = data
-        self.url = self.build_url()
+        self.url = self.build_url(use_https)
 
     # Coin API
     def coin_info(self):
